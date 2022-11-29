@@ -18,6 +18,8 @@ namespace BabylonianSquareRoot
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
+    /// 
+    /// Jake Taylor
     /// </summary>
     public partial class MainWindow : Window
     {
@@ -26,98 +28,55 @@ namespace BabylonianSquareRoot
             InitializeComponent();
         }
 
+        /// <summary>
+        ///     When the Return key is pressed and the input is valid, the square root
+        ///     is calculated and diplayed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnKeyDownHandler(object sender, KeyEventArgs e)
         {
             if (sender.Equals(txtInput) && e.Key == Key.Return)
             {
                 txtInvalid.Visibility = Visibility.Hidden;
                 
-                Debug.WriteLine("text box");
-                double a = 0;
+                double Y = 0;
 
                 try
                 {
-                    a = Convert.ToDouble(txtInput.Text);
+                    Y = Convert.ToDouble(txtInput.Text);
                 } catch (FormatException)
                 {
                     txtInvalid.Visibility = Visibility.Visible;
+                    txtInput.Clear();
                     return;
                 }
 
-                enterValue(a);
-                txtInput.Clear();
-
-                return;
-            }
-
-            //if (e.Key != Key.Return) return;
-
-            //txtInvalid.Visibility = Visibility.Hidden;
-
-            //if (e.Key == Key.Return && dudInput.Value.HasValue)
-            //{
-                
-                
-            //    enterValue((double)dudInput.Value);
-            //    dudInput.Value = 0;
-            //    //txtInvalid.Visibility = Visibility.Hidden;
-                
-            //    //Debug.WriteLine("Visibility is: " + txtInvalid);
-            //}
-            //else
-            //{
-            //    txtInvalid.Visibility = Visibility.Visible;
-            //    Debug.WriteLine("elseif ");
-            //    //txtInvalid.Visibility = Visibility.Visible;
-            //    dudInput.Value = null;
-            //}
-            
-            //Debug.WriteLine("Visibility is: " + txtInvalid.Visibility);
-
-        }
-
-        const double MAX_ERROR = 0.001;
-        const int MAX_ITERATIONS = 100;
-
-
-        private void enterValue(double Y)
-        {
-            if (Y <= 0)
-            {
-                // invalid
-                txtInvalid.Visibility = Visibility.Visible;
-                return;
-            }
-
-            double prevGuess;
-            double sqRoot = 10;
-
-            int totalIterations = MAX_ITERATIONS;
-
-            for (int i = 1; i <= MAX_ITERATIONS; i++) 
-            {
-                prevGuess = sqRoot;
-
-                sqRoot = 0.5 * (prevGuess + Y / prevGuess);
-
-                double AbsError = Math.Abs(Y - (sqRoot * sqRoot));
-
-                if (AbsError <= MAX_ERROR)
+                var sqR = BabylonSquareRoot.getSquareRoot(Y);
+                if (sqR == null)
                 {
-                    totalIterations = i;
-                    break;
+                    txtInvalid.Visibility = Visibility.Visible;
+
+                } 
+                else
+                {
+                    if (sqR.isCorrect)
+                    {
+                        lvResults.Items.Add(sqR);
+                    } else
+                    {
+                        lvResults.Items.Add(new { sqR.Y, sqR.sqRoot, iterations = sqR.iterations.ToString() + " (Incorrect)" });
+                    }
+
+                    // Highlight the most recent entry and make sure its in view
+                    lvResults.SelectedIndex = lvResults.Items.Count - 1;
+                    lvResults.ScrollIntoView(lvResults.SelectedItem);
                 }
+
+                txtInput.Clear();
             }
-
-            //results.Add(new Result(value, sqRoot, totalIterations));
-            //Result a = new Result(Y, sqRoot, totalIterations);
-            //lvResults.Items.Add(a);
-            lvResults.Items.Add(new { Y, sqRoot, iterations = totalIterations });
-            lvResults.SelectedIndex = lvResults.Items.Count - 1;
-            lvResults.ScrollIntoView(lvResults.SelectedItem);
-            //txtInvalid.Visibility = Visibility.Hidden;
-
         }
+
     }
 
 }

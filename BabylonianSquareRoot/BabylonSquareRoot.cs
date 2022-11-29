@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BabylonianSquareRoot
 {
-    public class BabylonianSquareRoot
+    public class BabylonSquareRoot
     {
         public double Y { get; }
         public double sqRoot { get; private set; }
@@ -19,7 +19,7 @@ namespace BabylonianSquareRoot
         public const int MAX_ITERATIONS = 100;
 
         
-        private BabylonianSquareRoot(double Y)
+        private BabylonSquareRoot(double Y)
         {
             this.Y = Y;
             isCorrect = false;
@@ -59,13 +59,13 @@ namespace BabylonianSquareRoot
         /// </summary>
         /// <param name="Y"></param>
         /// <returns>
-        ///     BabylonianSquareRoot containing the approximate square root.
+        ///     BabylonSquareRoot containing the approximate square root.
         /// </returns>
-        public static BabylonianSquareRoot? getSquareRoot(double Y)
+        public static BabylonSquareRoot? getSquareRoot(double Y)
         {
             if (Y <= 0) return null;
 
-            return new BabylonianSquareRoot(Y);
+            return new BabylonSquareRoot(Y);
         }
     }
 }
