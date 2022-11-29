@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,8 @@ namespace BabylonianSquareRoot
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
+    /// 
+    /// Jake Taylor
     /// </summary>
     public partial class MainWindow : Window
     {
@@ -25,68 +28,55 @@ namespace BabylonianSquareRoot
             InitializeComponent();
         }
 
+        /// <summary>
+        ///     When the Return key is pressed and the input is valid, the square root
+        ///     is calculated and diplayed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnKeyDownHandler(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Return && dudInput.Value.HasValue)
+            if (sender.Equals(txtInput) && e.Key == Key.Return)
             {
-                enterValue((double)dudInput.Value);
-                dudInput.Value = null;
-            }
-        }
+                txtInvalid.Visibility = Visibility.Hidden;
+                
+                double Y = 0;
 
-        const double MAX_ERROR = 0.001;
-        const int MAX_ITERATIONS = 100;
-
-        List<Result> results = new List<Result>();
-
-        private void enterValue(double Y)
-        {
-            if (Y < 0)
-            {
-                // invalid
-                return;
-            }
-
-            double prevGuess;
-            double sqRoot = 10;
-
-            int totalIterations = MAX_ITERATIONS;
-
-            for (int i = 1; i <= MAX_ITERATIONS; i++) 
-            {
-                prevGuess = sqRoot;
-
-                sqRoot = 0.5 * (prevGuess + Y / prevGuess);
-
-                double AbsError = Math.Abs(Y - (sqRoot * sqRoot));
-
-                if (AbsError <= MAX_ERROR)
+                try
                 {
-                    totalIterations = i;
-                    break;
+                    Y = Convert.ToDouble(txtInput.Text);
+                } catch (FormatException)
+                {
+                    txtInvalid.Visibility = Visibility.Visible;
+                    txtInput.Clear();
+                    return;
                 }
+
+                var sqR = BabylonSquareRoot.getSquareRoot(Y);
+                if (sqR == null)
+                {
+                    txtInvalid.Visibility = Visibility.Visible;
+
+                } 
+                else
+                {
+                    if (sqR.isCorrect)
+                    {
+                        lvResults.Items.Add(sqR);
+                    } else
+                    {
+                        lvResults.Items.Add(new { sqR.Y, sqR.sqRoot, iterations = sqR.iterations.ToString() + " (Incorrect)" });
+                    }
+
+                    // Highlight the most recent entry and make sure its in view
+                    lvResults.SelectedIndex = lvResults.Items.Count - 1;
+                    lvResults.ScrollIntoView(lvResults.SelectedItem);
+                }
+
+                txtInput.Clear();
             }
-
-            //results.Add(new Result(value, sqRoot, totalIterations));
-            Result a = new Result(Y, sqRoot, totalIterations);
-            lvResults.Items.Add(a);
-            lvResults.SelectedIndex = lvResults.Items.Count - 1;
-            lvResults.ScrollIntoView(a);
-
         }
+
     }
 
-    public class Result
-    {
-        public double Y { get; set; }
-        public double sqRoot { get; set; }
-        public int iterations { get; set; }
-
-        public Result(double y, double sqRoot, int iterations)
-        {
-            Y = y;
-            this.sqRoot = sqRoot;
-            this.iterations = iterations;
-        }
-    }
 }
