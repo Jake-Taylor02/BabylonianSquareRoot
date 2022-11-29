@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,11 +28,52 @@ namespace BabylonianSquareRoot
 
         private void OnKeyDownHandler(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Return && dudInput.Value.HasValue)
+            if (sender.Equals(txtInput) && e.Key == Key.Return)
             {
-                enterValue((double)dudInput.Value);
-                dudInput.Value = null;
+                txtInvalid.Visibility = Visibility.Hidden;
+                
+                Debug.WriteLine("text box");
+                double a = 0;
+
+                try
+                {
+                    a = Convert.ToDouble(txtInput.Text);
+                } catch (FormatException)
+                {
+                    txtInvalid.Visibility = Visibility.Visible;
+                    return;
+                }
+
+                enterValue(a);
+                txtInput.Clear();
+
+                return;
             }
+
+            //if (e.Key != Key.Return) return;
+
+            //txtInvalid.Visibility = Visibility.Hidden;
+
+            //if (e.Key == Key.Return && dudInput.Value.HasValue)
+            //{
+                
+                
+            //    enterValue((double)dudInput.Value);
+            //    dudInput.Value = 0;
+            //    //txtInvalid.Visibility = Visibility.Hidden;
+                
+            //    //Debug.WriteLine("Visibility is: " + txtInvalid);
+            //}
+            //else
+            //{
+            //    txtInvalid.Visibility = Visibility.Visible;
+            //    Debug.WriteLine("elseif ");
+            //    //txtInvalid.Visibility = Visibility.Visible;
+            //    dudInput.Value = null;
+            //}
+            
+            //Debug.WriteLine("Visibility is: " + txtInvalid.Visibility);
+
         }
 
         const double MAX_ERROR = 0.001;
@@ -41,9 +83,10 @@ namespace BabylonianSquareRoot
 
         private void enterValue(double Y)
         {
-            if (Y < 0)
+            if (Y <= 0)
             {
                 // invalid
+                txtInvalid.Visibility = Visibility.Visible;
                 return;
             }
 
@@ -72,6 +115,7 @@ namespace BabylonianSquareRoot
             lvResults.Items.Add(a);
             lvResults.SelectedIndex = lvResults.Items.Count - 1;
             lvResults.ScrollIntoView(a);
+            //txtInvalid.Visibility = Visibility.Hidden;
 
         }
     }

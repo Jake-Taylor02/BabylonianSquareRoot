@@ -8,13 +8,17 @@
         Title="Babylonian Square Root" Height="450" Width="948" HorizontalAlignment="Left" SizeToContent="WidthAndHeight">
     <Grid Margin="0,0,0,0">
         
-        <StackPanel Orientation="Vertical" Margin="0,0,0,0" Grid.ColumnSpan="3">
+        <StackPanel Orientation="Vertical" Margin="0,0,0,0" Grid.ColumnSpan="3" Visibility="Visible" HorizontalAlignment="Left">
             <Label x:Name="titleLabel" FontSize="18" Content="Babylonian Square Root" Margin="0,0,0,15"></Label>
+
+            <TextBox x:Name="txtInput" Width="242" HorizontalAlignment="Left" KeyDown="OnKeyDownHandler"></TextBox>
 
             <xctk:DoubleUpDown x:Name="dudInput" AllowInputSpecialValues="None" AllowSpin="True" 
                                ButtonSpinnerLocation="Right" ButtonSpinnerWidth="19" 
                                DisplayDefaultValueOnEmptyText="True" Increment="1" InputScope="Number" 
                                Width="226" Height="25" HorizontalAlignment="Left" KeyDown="OnKeyDownHandler" Minimum="1" Margin="5,5,5,5"/>
+
+            <Label x:Name="txtInvalid" Content="Invalid number" Visibility="Hidden" FontSize="11" Foreground="Red"></Label>
 
 
 
