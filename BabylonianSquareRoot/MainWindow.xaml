@@ -11,13 +11,11 @@
         <StackPanel Orientation="Vertical" Margin="0,0,0,0" Grid.ColumnSpan="3" Visibility="Visible" HorizontalAlignment="Left">
             <Label x:Name="titleLabel" FontSize="18" Content="Babylonian Square Root" Margin="0,0,0,15"></Label>
 
+            <Label x:Name="lblPrompt" Content="Please a Positive Real Number" HorizontalAlignment="Left" BorderThickness="0,5,0,0"></Label>
+
             <TextBox x:Name="txtInput" Width="242" HorizontalAlignment="Left" KeyDown="OnKeyDownHandler"></TextBox>
-
-            <xctk:DoubleUpDown x:Name="dudInput" AllowInputSpecialValues="None" AllowSpin="True" 
-                               ButtonSpinnerLocation="Right" ButtonSpinnerWidth="19" 
-                               DisplayDefaultValueOnEmptyText="True" Increment="1" InputScope="Number" 
-                               Width="226" Height="25" HorizontalAlignment="Left" KeyDown="OnKeyDownHandler" Minimum="1" Margin="5,5,5,5"/>
-
+            
+            <!-- Invisible label which only appears when the user attempts to enter an invalid number -->
             <Label x:Name="txtInvalid" Content="Invalid number" Visibility="Hidden" FontSize="11" Foreground="Red"></Label>
 
 
@@ -28,7 +26,7 @@
                         <GridViewColumn Header="Y" Width="110" DisplayMemberBinding="{Binding Y}"/>
                         <GridViewColumn Header="Square Root" Width="110" DisplayMemberBinding="{Binding sqRoot}"/>
                         <GridViewColumn Header="Iterations" Width="110" DisplayMemberBinding="{Binding iterations}"/>
-                    </GridView>
+                    </GridView> 
                 </ListView.View>
             </ListView>
 

@@ -79,7 +79,6 @@ namespace BabylonianSquareRoot
         const double MAX_ERROR = 0.001;
         const int MAX_ITERATIONS = 100;
 
-        List<Result> results = new List<Result>();
 
         private void enterValue(double Y)
         {
@@ -111,26 +110,14 @@ namespace BabylonianSquareRoot
             }
 
             //results.Add(new Result(value, sqRoot, totalIterations));
-            Result a = new Result(Y, sqRoot, totalIterations);
-            lvResults.Items.Add(a);
+            //Result a = new Result(Y, sqRoot, totalIterations);
+            //lvResults.Items.Add(a);
+            lvResults.Items.Add(new { Y, sqRoot, iterations = totalIterations });
             lvResults.SelectedIndex = lvResults.Items.Count - 1;
-            lvResults.ScrollIntoView(a);
+            lvResults.ScrollIntoView(lvResults.SelectedItem);
             //txtInvalid.Visibility = Visibility.Hidden;
 
         }
     }
 
-    public class Result
-    {
-        public double Y { get; set; }
-        public double sqRoot { get; set; }
-        public int iterations { get; set; }
-
-        public Result(double y, double sqRoot, int iterations)
-        {
-            Y = y;
-            this.sqRoot = sqRoot;
-            this.iterations = iterations;
-        }
-    }
 }
