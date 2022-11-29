@@ -16,16 +16,16 @@
             <TextBox x:Name="txtInput" Width="242" HorizontalAlignment="Left" KeyDown="OnKeyDownHandler" Margin="5,0,0,0"></TextBox>
             
             <!-- Invisible label which only appears when the user attempts to enter an invalid number -->
-            <Label x:Name="txtInvalid" Content="Invalid number" Visibility="Hidden" FontSize="11" Foreground="Red"></Label>
+            <Label x:Name="txtInvalid" Content="Invalid number, Try again" Visibility="Hidden" FontSize="11" Foreground="Red"></Label>
 
 
 
-            <ListView x:Name="lvResults" Width="360" HorizontalAlignment="Left" Height="225" Margin="5,5,5,5">
+            <ListView x:Name="lvResults" Width="365" HorizontalAlignment="Left" Height="225" Margin="5,5,5,5">
                 <ListView.View>
                     <GridView x:Name="gvItems">
                         <GridViewColumn Header="Y" Width="125" DisplayMemberBinding="{Binding Y}"/>
                         <GridViewColumn Header="Square Root" Width="125" DisplayMemberBinding="{Binding sqRoot}"/>
-                        <GridViewColumn Header="Iterations" Width="80" DisplayMemberBinding="{Binding iterations}"/>
+                        <GridViewColumn Header="Iterations" Width="100" DisplayMemberBinding="{Binding iterations}"/>
                     </GridView> 
                 </ListView.View>
             </ListView>

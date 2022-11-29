@@ -19,6 +19,8 @@ namespace BabylonianSquareRoot
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// 
+    /// Square root by the Babylonian method 
+    /// 
     /// Jake Taylor
     /// </summary>
     public partial class MainWindow : Window
@@ -42,11 +44,11 @@ namespace BabylonianSquareRoot
                 
                 double Y = 0;
 
-                try
-                {
+                try // try to parse into double, if exception occurs,
+                {   // input must be invalid
                     Y = Convert.ToDouble(txtInput.Text);
                 } catch (FormatException)
-                {
+                {// Input is invalid, Reject
                     txtInvalid.Visibility = Visibility.Visible;
                     txtInput.Clear();
                     return;
@@ -55,9 +57,9 @@ namespace BabylonianSquareRoot
                 var sqR = BabylonSquareRoot.getSquareRoot(Y);
                 if (sqR == null)
                 {
+                    // Input is invalid, Reject
                     txtInvalid.Visibility = Visibility.Visible;
-
-                } 
+                }
                 else
                 {
                     if (sqR.isCorrect)

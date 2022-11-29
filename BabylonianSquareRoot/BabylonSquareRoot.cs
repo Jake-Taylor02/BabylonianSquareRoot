@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace BabylonianSquareRoot
 {
+    /// <summary>
+    ///     Represents results of Babylonian method
+    /// </summary>
     public class BabylonSquareRoot
     {
         public double Y { get; }
